@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<!-- <link rel="stylesheet" href="plugin/highlight/monokai.css"> -->
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<section>
+					<p>GITHUB ACTIONS</p>
+					<img src="./images/github-actions.png" alt="Yaml_logo">
+				</section>
+				<section>
+					<p>Examples of using</p>
+					<img src="./images/github-action.jpg" alt="example 1">
+				</section>
+				<section>
+					<img src="./images/github-actions-gitops.png" alt="example 2">
+				</section>
+			</section>
+			<section>
+				<section>YAML</section>
+				<section>
+					<p>What is YAML?</p>
+					<img src="./images/Yaml_logo.png" alt="Yaml_logo" style="background-color: aliceblue; border-radius: 10px;">
+					<p style="text-align: left;">YAML is a human-readable data-serialization language. It is commonly used for
+						configuration files and in
+						applications where data is being stored or transmitted. </p>
+				</section>
+				<section>
+					<h3>Syntax Example</h3>
+					<pre><code data-trim data-noescape style="font-size: 12px; max-height: 500px;">
+	# Employee records
+
+	- Employee one:															||
+			name: Alex				||										||
+			job: Developer		||	=> depth 1				||
+			skills:						||										||		=> BLOCK 1
+				- python	   ||												||
+				- C/C++		   || => depth 2						||
+				- pascal	   ||												||
+
+	- Employee two:															||
+			name: Bob					||										||
+			job: Tester				||	=> depth 1				||
+			skills:						||										||		=> BLOCK 2
+				- lisp			 ||												||
+				- fortran		 ||	=> depth 2						||
+				- REST APIs	 ||												||
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<p>
+						CI/CD
+					</p>
+					<img src="./images/ci_cd.png" alt="CI/CD image">
+				</section>
+				<section>
+					<p>What is CI/CD</p>
+					<img src="./images/ci-cd-flow-desktop.png" alt="CI/CD image"
+						style="background-color: aliceblue; border-radius: 10px;">
+					<p style="text-align: left;">CI/CD is a method to frequently deliver apps to customers by introducing
+						automation into the stages of
+						continuous delivery, and continuous deployment. Specifically, CI/CD introduces ongoing automation and
+						continuous monitoring throughout the lifecycle of apps</p>
+				</section>
+				<section>Continuous delivery
+					<p style="text-align: left;">Continuous delivery automates the release of that validated code to a repository.
+						At the end of that process, the operations team is able to deploy an app to production quickly and easily.
+					</p>
+				</section>
+				<section>Continuous deployment
+					<p style="text-align: left;">Continuous deployment automates releasing an app to production.
+						In practice, continuous deployment means that a developer’s change to a cloud application could go live
+						within minutes of writing it (assuming it passes automated testing).
+					</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					Workflow
+				</section>
+				<section style="text-align: left;">
+					A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a YAML
+					file checked in to your repository and will run when triggered by an event in your repository, or they can be
+					triggered manually, or at a defined schedule.
+				</section>
+				<section>
+					<p>Workflow basics components:</p>
+					<li>One or more events that will trigger the workflow.</li>
+					<li>One or more jobs, each of which will execute on a runner machine and run a series of one or more steps.
+					</li>
+					<li>Each step can either run a script that you define or run an action, which is a reusable extension that can
+						simplify your workflow.</li>
+				</section>
+				<section>
+					<p>Example workflow</p>
+					<pre><code data-trim data-noescape style="font-size: 12px; max-height: 500px;">
+						name: test-workflow
+						on: [workflow_dispatch]
+						jobs:
+							test:
+								runs-on: ubuntu-latest
+								steps:
+									- name: print Hello GITHUB
+									  run: echo Hello GITHUB
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					Dependencies
+				</section>
+				<section>
+					<p>Dependencies</p>
+					<p style="text-align: left;">By default, the jobs in your workflow all run in parallel at the same time. If
+						you have a job that must
+						only run after another job has completed, you can use the needs keyword to create this dependency. If one of
+						the jobs fails, all dependent jobs are skipped;</p>
+					<pre><code data-trim data-noescape style="font-size: 12px; max-height: 500px;">
+							name: test-workflow
+							on: [workflow_dispatch]
+							jobs:
+								test:
+									runs-on: ubuntu-latest
+									steps:
+										- name: print Hello GITHUB
+											run: echo Hello GITHUB
+						</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<p>
+						Events
+					</p>
+					<p>A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a
+						YAML file checked in to your repository and will run when triggered by an event in your repository, or they
+						can be triggered manually, or at a defined schedule.</p>
+					<a href="https://docs.github.com/en/actions/using-workflows/triggering-a-workflow">More about triggering and
+						events</a>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape style="font-size: 12px; max-height: 500px;">
+					on:
+					pull_request:
+						types: [opened, reopened]
+					jobs:
+						specific_review_requested:
+							runs-on: ubuntu-latest
+							steps:
+								- run: echo 'A review from octo-team was requested'
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<p>Artifacts</p>
+					<p>Artifacts allow you to persist data after a job has completed, and share that data with another job in the
+						same workflow. An artifact is a file or collection of files produced during a workflow run. For example, you
+						can use artifacts to save your build and test output after a workflow run has ended.</p>
+					<a href="https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts">More about
+						artifacts</a>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape style="font-size: 12px; max-height: 500px;">
+						name: Node CI
+
+						on: [push]
+						
+						jobs:
+							build_and_test:
+								runs-on: ubuntu-latest
+								steps:
+									- name: Checkout repository
+										uses: actions/checkout@v3
+									- name: npm install, build, and test
+										run: |
+											npm install
+											npm run build --if-present
+											npm test
+									- name: Archive production artifacts
+										uses: actions/upload-artifact@v3
+										with:
+											name: dist-without-markdown
+											path: |
+												dist
+												!dist/**/*.md
+					</code></pre>
+				</section>
+			</section>
+			<section>The End</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<!-- <script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script> -->
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			// plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>

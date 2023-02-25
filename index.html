@@ -149,9 +149,14 @@
 					<p>
 						Events
 					</p>
-					<p>A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a
-						YAML file checked in to your repository and will run when triggered by an event in your repository, or they
-						can be triggered manually, or at a defined schedule.</p>
+					<p>You can specify a single event or multiple events. For example, a workflow with the following on value will
+						run when a push is made to any branch in the repository or when someone forks the repository:
+					<pre><code data-trim data-noescape style="font-size: 12px; max-height: 500px;">
+						on: [push, fork]
+					</code></pre>
+					If you specify multiple events, only one of those events needs to occur to trigger your workflow. If
+					multiple triggering events for your workflow occur at the same time, multiple workflow runs will be
+					triggered.</p>
 					<a href="https://docs.github.com/en/actions/using-workflows/triggering-a-workflow">More about triggering and
 						events</a>
 				</section>
